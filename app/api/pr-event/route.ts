@@ -1,4 +1,4 @@
-import { fetchScores, saveReview } from '@/app/lib/data'
+import { fetchScores, saveReview } from '@/app/lib/data-mysql'
 import { sendLarkMessage } from '@/app/lib/lark-bot'
 import { getLabelsAndScore, pullRequest, pullRequestReview } from '@/app/lib/pr-message'
 import { headers } from 'next/headers'
@@ -43,3 +43,4 @@ export async function POST(request: Request) {
     })
   }
 }
+

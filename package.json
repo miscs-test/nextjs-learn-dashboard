@@ -6,13 +6,14 @@
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
     "start": "next start",
-    "seed": "node -r dotenv/config ./scripts/seed.js",
+    "seed": "node -r dotenv/config ./scripts/seed-mysql.js",
     "lint": "next lint"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
     "@octokit/webhooks-types": "^7.4.0",
     "@tailwindcss/forms": "^0.5.7",
+    "@tidbcloud/serverless": "^0.1.1",
     "@types/node": "20.5.7",
     "@vercel/postgres": "^0.5.1",
     "autoprefixer": "10.4.15",

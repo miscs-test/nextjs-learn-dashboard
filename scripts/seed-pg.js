@@ -204,15 +204,6 @@ async function seedScores(client) {
   }
 }
 
-// id: '3958dc9e-712f-4377-85e9-fec4b6a6441b',
-// pr_url: 'https://github.com/tidbcloud/dbaas-ui/pull/3032',
-// pr_title: 'refactor(swagger, features, screens): restructure legacy api clients and the severless v1beta1 api client',
-// pr_labels: 'no-e2e-test,no-ct,release-20240319',
-// pr_author: 'Yuiham',
-// pr_reviewer: 'awxxxxxx',
-// pr_score: 0,
-// created_at: '2024-03-18T08:42:43.217Z',
-// updated_at: '2024-03-18T08:42:43.217Z'
 async function seedReviews(client) {
   try {
     await client.sql`DROP TABLE IF EXISTS reviews`;

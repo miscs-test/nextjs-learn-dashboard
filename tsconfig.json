@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/lib/placeholder-data.js",
-    "scripts/seed.js"
+    "scripts/seed-pg.js",
+    "scripts/seed-mysql.js"
   ],
   "exclude": ["node_modules"]
 }
