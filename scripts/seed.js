@@ -4,6 +4,8 @@ const {
   customers,
   revenue,
   users,
+  scores,
+  reviews
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
 
@@ -160,13 +162,115 @@ async function seedRevenue(client) {
   }
 }
 
+//--------------------------------------------------
+
+async function seedScores(client) {
+  try {
+    await client.sql`DROP TABLE IF EXISTS scores`;
+
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Create the "scores" table if it doesn't exist
+    const createTable = await client.sql`
+    CREATE TABLE IF NOT EXISTS scores (
+    github_id VARCHAR(100) NOT NULL PRIMARY KEY,
+    name_in_company VARCHAR(100) NOT NULL,
+    init_score REAL NOT NULL,
+    extra_score REAL NOT NULL
+  );
+`;
+
+    console.log(`Created "scores" table`);
+
+    // Insert data into the "invoices" table
+    const insertedScores = await Promise.all(
+      scores.map(
+        (score) => client.sql`
+        INSERT INTO scores (github_id, name_in_company, init_score, extra_score)
+        VALUES (${score.github_id}, ${score.name_in_company}, ${score.init_score}, ${score.extra_score})
+      `,
+      ),
+    );
+
+    console.log(`Seeded ${insertedScores.length} scores`);
+
+    return {
+      createTable,
+      scores: insertedScores,
+    };
+  } catch (error) {
+    console.error('Error seeding scores:', error);
+    throw error;
+  }
+}
+
+// id: '3958dc9e-712f-4377-85e9-fec4b6a6441b',
+// pr_url: 'https://github.com/tidbcloud/dbaas-ui/pull/3032',
+// pr_title: 'refactor(swagger, features, screens): restructure legacy api clients and the severless v1beta1 api client',
+// pr_labels: 'no-e2e-test,no-ct,release-20240319',
+// pr_author: 'Yuiham',
+// pr_reviewer: 'awxxxxxx',
+// pr_score: 0,
+// created_at: '2024-03-18T08:42:43.217Z',
+// updated_at: '2024-03-18T08:42:43.217Z'
+async function seedReviews(client) {
+  try {
+    await client.sql`DROP TABLE IF EXISTS reviews`;
+
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    // Create the "reviews" table if it doesn't exist
+    const createTable = await client.sql`
+    CREATE TABLE IF NOT EXISTS reviews (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    pr_url VARCHAR(100) NOT NULL,
+    pr_title VARCHAR(255) NOT NULL,
+    pr_labels VARCHAR(100) NOT NULL,
+    pr_author VARCHAR(100) NOT NULL,
+    pr_reviewer VARCHAR(100) NOT NULL,
+    pr_score REAL NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT unique_pr_url_reviewer UNIQUE (pr_url, pr_reviewer)
+  );
+`;
+
+    console.log(`Created "reviews" table`);
+
+    // Insert data into the "invoices" table
+    const insertedReviews = await Promise.all(
+      reviews.map(
+        (review) => client.sql`
+        INSERT INTO reviews (pr_url, pr_title, pr_labels, pr_author, pr_reviewer, pr_score, created_at, updated_at)
+        VALUES (${review.pr_url}, ${review.pr_title}, ${review.pr_labels}, ${review.pr_author}, ${review.pr_reviewer}, ${review.pr_score}, ${review.created_at}, ${review.updated_at})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+      ),
+    );
+
+    console.log(`Seeded ${insertedReviews.length} reviews`);
+
+    return {
+      createTable,
+      reviews: insertedReviews,
+    };
+  } catch (error) {
+    console.error('Error seeding reviews:', error);
+    throw error;
+  }
+}
+
 async function main() {
   const client = await db.connect();
 
-  await seedUsers(client);
-  await seedCustomers(client);
-  await seedInvoices(client);
-  await seedRevenue(client);
+  // await seedUsers(client);
+  // await seedCustomers(client);
+  // await seedInvoices(client);
+  // await seedRevenue(client);
+
+  await seedScores(client);
+  await seedReviews(client);
 
   await client.end();
 }

@@ -180,9 +180,76 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
+const scores = [
+  {
+    github_id: 'sanshuiyijing',
+    name_in_company: 'Yijing Nie',
+    init_score: 38.0,
+    extra_score: 0.0,
+  },
+  {
+    github_id: 'Bosn',
+    name_in_company: 'Bosn Ma',
+    init_score: 39.0,
+    extra_score: 0.0,
+  },
+  {
+    github_id: 'shhdgit',
+    name_in_company: 'Haihuang Su',
+    init_score: 38.0,
+    extra_score: 0.0,
+  },
+  {
+    github_id: 'zhangc110033',
+    name_in_company: 'eric',
+    init_score: 34.0,
+    extra_score: 0.0,
+  },
+  {
+    github_id: 'baurine',
+    name_in_company: 'Baurine Huang',
+    init_score: 41.0,
+    extra_score: 0.0,
+  },
+  {
+    github_id: 'zoubingwu',
+    name_in_company: 'Bingwu Zou',
+    init_score: 38.5,
+    extra_score: 0.0,
+  },
+  {
+    github_id: 'awxxxxxx',
+    name_in_company: 'Shuixiong Deng',
+    init_score: 37.5,
+    extra_score: 0.0,
+  },
+  {
+    github_id: 'Yuiham',
+    name_in_company: 'Ruihan Chen',
+    init_score: 50.0,
+    extra_score: 0.0,
+  },
+]
+
+const reviews = [
+  {
+    id: '3958dc9e-712f-4377-85e9-fec4b6a6441b',
+    pr_url: 'https://github.com/tidbcloud/dbaas-ui/pull/3032',
+    pr_title: 'refactor(swagger, features, screens): restructure legacy api clients and the severless v1beta1 api client',
+    pr_labels: 'no-e2e-test,no-ct,release-20240319',
+    pr_author: 'Yuiham',
+    pr_reviewer: 'awxxxxxx',
+    pr_score: 0.0,
+    created_at: '2024-03-18T08:42:43.217Z',
+    updated_at: '2024-03-18T08:42:43.217Z'
+  }
+]
+
 module.exports = {
   users,
   customers,
   invoices,
   revenue,
+  scores,
+  reviews
 };

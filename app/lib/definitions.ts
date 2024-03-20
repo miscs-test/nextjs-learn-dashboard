@@ -86,3 +86,10 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+// export type ScoreTable = {
+//   github_id: string;
+//   name_in_company: string;
+//   init_score: number;
+//   extra_score: number;
+// }
