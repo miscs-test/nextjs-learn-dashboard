@@ -104,8 +104,8 @@ async function main() {
   // await seedInvoices(client);
   // await seedRevenue(client);
 
-  await seedScores(client);
-  await seedReviews(client);
+  // await seedScores(client);
+  // await seedReviews(client);
 
   // await client.end();
 }
