@@ -1,4 +1,4 @@
-import { fetchScores, saveReview } from '@/app/lib/data-mysql'
+import { getScores, saveReview } from '@/app/lib/data-mysql'
 // import { saveReview as saveReviewToPg } from '@/app/lib/data-pg'
 import { sendLarkMessage } from '@/app/lib/lark-bot'
 import { getLabelsAndScore, pullRequest, pullRequestReview } from '@/app/lib/pr-message'
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
       const { action, pull_request } = event
       if ((action === 'opened' || action === 'reopened') && pull_request.draft === false) {
-        const scores = await fetchScores()
+        const scores = await getScores()
         msg += `\n---\n**CURRENT SCORES**: ${scores}`
       }
     } else if (eventName === 'pull_request_review') {
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
           const { pull_request } = event
           msg += `\n${getLabelsAndScore(pull_request)}, **${scoreMsg}**`
 
-          const scores = await fetchScores()
+          const scores = await getScores()
           msg += `\n---\n**CURRENT SCORES**: ${scores}`
         }
       }

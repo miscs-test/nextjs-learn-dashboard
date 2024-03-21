@@ -9,7 +9,7 @@ import { connect } from '@tidbcloud/serverless'
 
 const conn = connect({ url: process.env.DATABASE_URL })
 
-export async function fetchScores() {
+export async function fetchSortedScores() {
   noStore()
 
   try {
@@ -18,10 +18,20 @@ export async function fetchScores() {
       FROM scores
     `);
     const allItems = data as any[];
-    console.log({ allItems })
+    // console.log({ allItems })
     allItems.sort(
       (a, b) => a.init_score + a.extra_score - (b.init_score + b.extra_score)
     );
+    return allItems;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all scores.');
+  }
+}
+
+export async function getScores() {
+  try {
+    const allItems = await fetchSortedScores()
     const scores = allItems
       .map((i) => `${i.name_in_company}(${i.init_score + i.extra_score})`)
       .join(' | ');
