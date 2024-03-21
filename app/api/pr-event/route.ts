@@ -1,4 +1,5 @@
 import { fetchScores, saveReview } from '@/app/lib/data-mysql'
+// import { saveReview as saveReviewToPg } from '@/app/lib/data-pg'
 import { sendLarkMessage } from '@/app/lib/lark-bot'
 import { getLabelsAndScore, pullRequest, pullRequestReview } from '@/app/lib/pr-message'
 import { headers } from 'next/headers'
@@ -25,6 +26,9 @@ export async function POST(request: Request) {
 
       if (!!msg) {
         const scoreMsg = await saveReview(event)
+
+        // await saveReviewToPg(event)
+
         if (scoreMsg !== '') {
           const { pull_request } = event
           msg += `\n${getLabelsAndScore(pull_request)}, **${scoreMsg}**`
@@ -38,9 +42,10 @@ export async function POST(request: Request) {
 
     return Response.json({ msg })
   } catch (error: any) {
+    await sendLarkMessage(`Webhook error: ${error.message}`)
+
     return new Response(`Webhook error: ${error.message}`, {
       status: 400,
     })
   }
 }
-
