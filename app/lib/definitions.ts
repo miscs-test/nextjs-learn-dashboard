@@ -92,4 +92,5 @@ export type ScoreTable = {
   name_in_company: string;
   init_score: number;
   extra_score: number;
+  total_score: number
 }

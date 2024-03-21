@@ -46,7 +46,7 @@ export default async function PRScoreRank({
                 <p
                   className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
                 >
-                  {item.init_score + item.extra_score}
+                  {item.total_score}
                 </p>
               </div>
             );

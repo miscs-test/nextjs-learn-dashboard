@@ -14,14 +14,15 @@ export async function fetchSortedScores() {
 
   try {
     const data = await conn.execute(`
-      SELECT *
+      SELECT *, init_score + extra_score as total_score
       FROM scores
+      ORDER BY total_score ASC
     `);
     const allItems = data as any[];
     // console.log({ allItems })
-    allItems.sort(
-      (a, b) => a.init_score + a.extra_score - (b.init_score + b.extra_score)
-    );
+    // allItems.sort(
+    //   (a, b) => a.init_score + a.extra_score - (b.init_score + b.extra_score)
+    // );
     return allItems;
   } catch (err) {
     console.error('Database Error:', err);
@@ -70,7 +71,7 @@ export async function getScores() {
   try {
     const allItems = await fetchSortedScores()
     const scores = allItems
-      .map((i) => `${i.name_in_company}(${i.init_score + i.extra_score})`)
+      .map((i) => `${i.name_in_company}(${i.total_score})`)
       .join(' | ');
     return scores;
   } catch (err) {
