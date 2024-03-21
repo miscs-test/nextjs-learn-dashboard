@@ -29,6 +29,43 @@ export async function fetchSortedScores() {
   }
 }
 
+export async function fetchFilteredReviews(
+  query: string,
+  currentPage: number,
+  pageSize: number
+) {
+  noStore()
+
+  const offset = (currentPage - 1) * pageSize;
+
+  try {
+    const count = await conn.execute(`SELECT COUNT(*) as count
+    FROM reviews
+    WHERE
+      reviews.pr_author LIKE CONCAT('%', ?, '%') OR
+      reviews.pr_reviewer LIKE CONCAT('%', ?, '%') OR
+      reviews.pr_title LIKE CONCAT('%', ?, '%')
+  `, [query, query, query]) as any[];
+    const totalPages = Math.ceil(count[0].count / pageSize);
+
+    const reviews = await conn.execute(`
+      SELECT *
+      FROM reviews
+      WHERE
+        reviews.pr_author LIKE CONCAT('%', ?, '%') OR
+        reviews.pr_reviewer LIKE CONCAT('%', ?, '%') OR
+        reviews.pr_title LIKE CONCAT('%', ?, '%')
+      ORDER BY reviews.updated_at DESC
+      LIMIT ? OFFSET ?
+    `, [query, query, query, pageSize, offset]) as any[];
+
+    return { reviews, totalPages }
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to query reviews.');
+  }
+}
+
 export async function getScores() {
   try {
     const allItems = await fetchSortedScores()
