@@ -10,6 +10,16 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // Basic redirect
+      {
+        source: '/dashboard',
+        destination: '/dashboard/rank',
+        permanent: true,
+      },
+    ]
+  },
 };
 
 module.exports = nextConfig;

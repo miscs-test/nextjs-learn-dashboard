@@ -43,14 +43,14 @@ export default async function ReviewsTable({
                         height={28}
                         alt={`${review.pr_reviewer}'s profile picture`}
                       />
-                      <p className='font-bold'>{review.pr_reviewer}</p>
+                      <p className='font-semibold'>{review.pr_reviewer}</p>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     <div className='flex flex-col'>
                       <a href={review.pr_url} className="text-blue-400">{review.pr_title}</a>
                       <span>{review.pr_labels}</span>
-                      <span><span className="text-gray-500">opened by</span> <span className="font-bold">{review.pr_author}</span></span>
+                      <span><span className="text-gray-500">opened by</span> <span className="font-semibold">{review.pr_author}</span></span>
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">

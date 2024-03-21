@@ -95,8 +95,6 @@ async function seedReviews(client) {
 }
 
 async function main() {
-  // const client = await db.connect();
-
   const client = connect({ url: process.env.DATABASE_URL })
 
   // await seedUsers(client);
@@ -106,8 +104,6 @@ async function main() {
 
   // await seedScores(client);
   // await seedReviews(client);
-
-  // await client.end();
 }
 
 main().catch((err) => {
