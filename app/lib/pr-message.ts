@@ -173,11 +173,13 @@ class PullRequestReviewHandlers {
 
     const cond1 =
       review.state === 'approved' || review.state === 'changes_requested';
-    const cond2 = review.state === 'commented' && review.body;
+    // const cond2 = review.state === 'commented' && review.body;
+    // when commenting with `pull_request_review_comment.created` action, the `review.body` is empty
+    const cond2 = review.state === 'commented';
     if (cond1 || cond2) {
       const title = `${getRepoName(repository)}: [#${pull_request.number} ${pull_request.title
         }](${review.html_url}) ${review.state} by ${getUserName(sender)}`;
-      const text = `[${pull_request.title}](${review.html_url})\n${review.body}`;
+      const text = `[${pull_request.title}](${review.html_url})\n${review.body || ''}`;
       return [title, text].join('\n');
     }
   }
