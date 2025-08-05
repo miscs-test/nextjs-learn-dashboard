@@ -179,7 +179,7 @@ class PullRequestReviewHandlers {
     if (cond1 || cond2) {
       const title = `${getRepoName(repository)}: [#${pull_request.number} ${pull_request.title
         }](${review.html_url}) ${review.state} by ${getUserName(sender)}`;
-      const text = `[${pull_request.title}](${review.html_url})\n${review.body || ''}`;
+      const text = `[${pull_request.title}](${review.html_url})\n${(review.body || '').slice(0, 100)}...`;
       return [title, text].join('\n');
     }
   }
